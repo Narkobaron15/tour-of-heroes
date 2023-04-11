@@ -10,7 +10,6 @@ import { MessageService } from '../message.service';
   styleUrls: ['./heroes.component.css']
 })
 export class HeroesComponent {
-  #selectedHero?: Hero;
   heroes: Hero[] = [];
 
   constructor(private heroService: HeroService, private messageService: MessageService) { }
@@ -18,23 +17,8 @@ export class HeroesComponent {
     this.getHeroes();
   }
 
-  get selectedHero(): Hero | undefined {
-    return this.#selectedHero;
-  }
-
   private getHeroes(): void {
     this.heroService.getHeroes()
       .subscribe(x => this.heroes = x);
-  }
-
-  onSelect(hero: Hero) {
-    if (this.#selectedHero === hero) {
-      this.#selectedHero = undefined;
-      this.messageService.add(`HeroesComponent: Deselected`);
-    }
-    else {
-      this.#selectedHero = hero;
-      this.messageService.add(`HeroesComponent: Selected hero id=${hero.id}`);
-    }
   }
 }
